@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人信息管理 - 运维工程师简历</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/all.min.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/font.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <style>
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent);
+        }
+
+        .btn-secondary {
+            background-color: #7f8c8d;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            background-color: #95a5a6;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .section-content {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 5px;
+            border-left: 3px solid var(--accent);
+        }
+    </style>
+</head>
+<body>
+<div class="resume-container">
+    <!--简介栏-->
+    <div class="resume-header">
+        <h1 class="resume-title">个人信息管理</h1>
+        <p class="resume-subtitle">Profile Management</p>
+
+        <div class="contact-info">
+            <div class="contact-item">
+                <i class="fas fa-user"></i>
+                <span th:text="${user.name}">XXX</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span th:text="${user.phone}">1XXXXXXXXX</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span th:text="${user.email}">xxx@xxx.com</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-blog"></i>
+                <a href="#" target="_blank" th:href="${user.blog}" style="color: var(--dark); text-decoration: none; font-weight: normal; font-size: inherit;">我的博客</a>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <a href="#" th:href="@{/user/logout}" style="color: var(--dark); text-decoration: none; font-weight: normal; font-size: inherit;">退出登录</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="resume-content">
+        <form th:action="@{/admin/update}" method="post">
+            <!--基本信息-->
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-info-circle"></i> 基本信息</h2>
+                <div class="section-content">
+                    <div class="info-grid">
+                        <div class="form-group">
+                            <label for="name">姓名：</label>
+                            <input type="text" id="name" name="name" class="form-control" th:value="${user.name}">
+                        </div>
+                        <div class="form-group">
+                            <label for="sex">性别：</label>
+                            <select id="sex" name="sex" class="form-control">
+                                <option value="男" th:selected="${user.sex == '男'}">男</option>
+                                <option value="女" th:selected="${user.sex == '女'}">女</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">年龄：</label>
+                            <input type="number" id="age" name="age" class="form-control" th:value="${user.age}">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">电话：</label>
+                            <input type="text" id="phone" name="phone" class="form-control" th:value="${user.phone}">
+                        </div>
+                        <div class="form-group">
+                            <label for="qq">QQ：</label>
+                            <input type="text" id="qq" name="qq" class="form-control" th:value="${user.qq}">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">邮箱：</label>
+                            <input type="email" id="email" name="email" class="form-control" th:value="${user.email}">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">地址：</label>
+                            <input type="text" id="address" name="address" class="form-control" th:value="${user.address}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">密码（不修改请留空）：</label>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="留空则不修改密码">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--教育背景-->
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-graduation-cap"></i> 教育背景</h2>
+                <div class="section-content">
+                    <div class="form-group">
+                        <label for="school">学校：</label>
+                        <input type="text" id="school" name="school" class="form-control" th:value="${user.school}">
+                    </div>
+                    <div class="form-group">
+                        <label for="speciality">专业：</label>
+                        <input type="text" id="speciality" name="speciality" class="form-control" th:value="${user.speciality}">
+                    </div>
+                    <div class="form-group">
+                        <label for="education">学历：</label>
+                        <input type="text" id="education" name="education" class="form-control" th:value="${user.education}">
+                    </div>
+                    <div class="form-group">
+                        <label for="date">毕业时间：</label>
+                        <input type="date" id="date" name="date" class="form-control" th:value="${#dates.format(user.date, 'yyyy-MM-dd')}">
+                    </div>
+                </div>
+            </div>
+
+            <!--求职岗位-->
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-briefcase"></i> 求职岗位</h2>
+                <div class="section-content">
+                    <div class="form-group">
+                        <label for="career">应聘职位：</label>
+                        <input type="text" id="career" name="career" class="form-control" th:value="${user.career}">
+                    </div>
+                    <div class="form-group">
+                        <label for="seniority">工作年限：</label>
+                        <input type="number" id="seniority" name="seniority" class="form-control" th:value="${user.seniority}">
+                    </div>
+                </div>
+            </div>
+
+            <!--个人优势-->
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-star"></i> 个人优势</h2>
+                <div class="section-content">
+                    <div class="form-group">
+                        <label for="skill">技能描述（支持HTML格式）：</label>
+                        <textarea id="skill" name="skill" class="form-control" th:text="${user.skill}"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!--工作经历-->
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-history"></i> 工作经历</h2>
+                <div class="section-content">
+                    <div class="form-group">
+                        <label for="workone">工作经历一（支持HTML格式）：</label>
+                        <textarea id="workone" name="workone" class="form-control" th:text="${user.workone}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="worktwo">工作经历二（支持HTML格式）：</label>
+                        <textarea id="worktwo" name="worktwo" class="form-control" th:text="${user.worktwo}"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!--项目经验-->
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-project-diagram"></i> 项目经验</h2>
+                <div class="section-content">
+                    <div class="form-group">
+                        <label for="workthree">项目经验一（支持HTML格式）：</label>
+                        <textarea id="workthree" name="workthree" class="form-control" th:text="${user.workthree}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="workfour">项目经验二（支持HTML格式）：</label>
+                        <textarea id="workfour" name="workfour" class="form-control" th:text="${user.workfour}"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!--其他信息-->
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-link"></i> 其他信息</h2>
+                <div class="section-content">
+                    <div class="form-group">
+                        <label for="blog">博客地址：</label>
+                        <input type="url" id="blog" name="blog" class="form-control" th:value="${user.blog}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> 保存信息
+                </button>
+                <a th:href="@{/main.html}" class="btn btn-secondary">
+                    <i class="fas fa-eye"></i> 查看简历
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer">
+        <p>个人信息管理页面</p>
+    </div>
+</div>
+
+<script>
+    // 添加简单的动画效果
+    document.addEventListener('DOMContentLoaded', function () {
+        const sections = document.querySelectorAll('.section');
+        sections.forEach((section, index) => {
+            section.style.opacity = 0;
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+            setTimeout(() => {
+                section.style.opacity = 1;
+                section.style.transform = 'translateY(0)';
+            }, 100 + (index * 100));
+        });
+    });
+</script>
+</body>
+</html>
